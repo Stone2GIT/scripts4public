@@ -15,4 +15,4 @@ Limitations:
 
 Usage:
 
-Simply execute the script with Powershell - no arguments need to be given.
+- Simply execute the script with Powershell - no arguments need to be given.
