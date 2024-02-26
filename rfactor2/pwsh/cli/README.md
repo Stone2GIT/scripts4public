@@ -13,3 +13,6 @@ Limitations:
 - assumes rFactor 2 dedicated server is running at default port 5397
 - assumes rFactor 2 dedicated server profile is *player*
 
+Usage:
+
+Simply execute the script with Powershell - no arguments need to be given.
