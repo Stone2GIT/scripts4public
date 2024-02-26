@@ -10,8 +10,8 @@ write back all logfiles when the last driver leaves the server / session.
 
 Limitations:
 - needs to be copied and executed at *rfactor 2 root*
-- assumes rFactor 2 dedicated server is running at default port 5397
-- assumes rFactor 2 dedicated server profile is *player*
+- assumes rFactor 2 dedicated server is running at default port 5397 (can be changed inside script)
+- assumes rFactor 2 dedicated server profile is *player* (can be changed inside script)
 
 Usage:
 
