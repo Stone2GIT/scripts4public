@@ -14,7 +14,7 @@ if ( $args[0] ) {
     $PROFILE=$args[0]
  }
  else {
-    $PROFILE=player
+    $PROFILE="player"
  }
 
 $RF2USERDATA="userdata\$PROFILE"
