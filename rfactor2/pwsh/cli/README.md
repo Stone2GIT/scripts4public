@@ -15,4 +15,6 @@ Limitations:
 
 Usage:
 
-- Simply execute the script with Powershell - no arguments need to be given.
+- .\rf2_session_switcher.ps1 <profile> 
+
+*profile defaults to player*
