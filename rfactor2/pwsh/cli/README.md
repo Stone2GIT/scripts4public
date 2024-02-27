@@ -29,3 +29,4 @@ Limitations:
 Usage:
 
 - .\rf2_server_shutdown.ps1 \<profile\> *profile defaults to player*
+x
