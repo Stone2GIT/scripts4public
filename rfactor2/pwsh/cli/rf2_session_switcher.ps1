@@ -21,12 +21,12 @@ $RF2USERDATA="userdata\$PROFILE"
 $RF2UIPORT=(((gc $RF2USERDATA\$PROFILE.JSON)| select-string -Pattern "WebUI port""") -split ":")
 $RF2UIPORT=($RF2UIPORT[1] -replace ",",'')
 
-#$RF2DSPORT=5397
+#$RF2UIPORT=5397
 #$RF2USERDATA="userdata\$PROFILE"
 
 function check4server {
 
-    while (Invoke-WebRequest -Uri http://127.0.0.1:$RF2DSPORT/rest/chat -Method Post) { write-host "Server seems to be still up"; start-sleep -seconds 3 }
+    while (Invoke-WebRequest -Uri http://127.0.0.1:$RF2UIPORT/rest/chat -Method Post) { write-host "Server seems to be still up"; start-sleep -seconds 3 }
 
 }
 
@@ -84,13 +84,13 @@ function shutdown_server {
     write-host "shutdown server in 1 minute"
 
     # sending message to server and players
-    if ((Invoke-WebRequest -Uri http://127.0.0.1:$RF2DSPORT/rest/chat -Method POST -Body "Server shutdown in 1 minute"))
+    if ((Invoke-WebRequest -Uri http://127.0.0.1:$RF2UIPORT/rest/chat -Method POST -Body "Server shutdown in 1 minute"))
     {
         Start-Sleep -Seconds 60
     }
 
     # shutdown the server (as we need to write to json files and they are opened while server is running), assuming default port
-    Invoke-WebRequest -Uri http://127.0.0.1:$RF2DSPORT/navigation/action/NAV_EXIT -Method POST
+    Invoke-WebRequest -Uri http://127.0.0.1:$RF2UIPORT/navigation/action/NAV_EXIT -Method POST
     
     # the server needs some time to go down ... and close the files
     check4server
