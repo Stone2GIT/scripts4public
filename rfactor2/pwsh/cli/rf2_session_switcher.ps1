@@ -9,19 +9,12 @@
 # - script needs to be copied to rf2 root
 #
 
-# limitations
-#
-# - script needs to have dedicated server configured on port 5397 (will be made dynamic in future by grepping for port in player.json)
-
 # variable definitions
-
-$PROFILE=$args[0]
-
-if ( $PROFILE ) {
- write-host "Profile is given with "$PROFILE
+if ( $args[0] ) {
+    $PROFILE=$args[0]
  }
  else {
- $PROFILE=player
+    $PROFILE=player
  }
 
 $RF2USERDATA="userdata\$PROFILE"
