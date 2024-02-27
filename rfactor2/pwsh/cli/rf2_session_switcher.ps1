@@ -14,8 +14,22 @@
 # - script needs to have dedicated server configured on port 5397 (will be made dynamic in future by grepping for port in player.json)
 
 # variable definitions
-$RF2DSPORT=5397
-$RF2USERDATA="userdata\player"
+
+$PROFILE=$args[0]
+
+if ( $PROFILE ) {
+ write-host "Profile is given with "$PROFILE
+ }
+ else {
+ $PROFILE=player
+ }
+
+$RF2USERDATA="userdata\$PROFILE"
+$RF2UIPORT=(((gc $RF2USERDATA\$PROFILE.JSON)| select-string -Pattern "WebUI port""") -split ":")
+$RF2UIPORT=($RF2UIPORT[1] -replace ",",'')
+
+#$RF2DSPORT=5397
+#$RF2USERDATA="userdata\$PROFILE"
 
 function check4server {
 
