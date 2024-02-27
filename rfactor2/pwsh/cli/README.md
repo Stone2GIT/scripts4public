@@ -15,6 +15,6 @@ Limitations:
 
 Usage:
 
-- .\rf2_session_switcher.ps1 <profile> 
+- .\rf2_session_switcher.ps1 \<profile\> *profile defaults to player*
 
-*profile defaults to player*
+
