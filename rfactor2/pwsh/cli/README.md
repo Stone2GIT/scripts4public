@@ -29,4 +29,19 @@ Limitations:
 Usage:
 
 - .\rf2_server_shutdown.ps1 \<profile\> *profile defaults to player*
+
+## rf2_server_startup.ps1
+
+This is a Windows Powershell script which can be used with rFactor 2 Dedicated Server. It needs to be copied to *rfactor 2 root*.
+
+It starts rFactor 2 Dedicated Server.
+
+Limitations:
+
+- needs to be copied and executed at *rfactor 2 root*
+
+Usage:
+
+- .\rf2_server_startup.ps1 \<profile\> *profile defaults to player*
 x
+
