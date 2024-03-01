@@ -28,7 +28,7 @@ Limitations:
 
 Usage:
 
-- .\rf2_server_shutdown.ps1 \<profile\> *profile defaults to player*
+- .\rf2_server_shutdown.ps1 \[profile]> *shutdown ds for all profiles if not specified*
 
 ## rf2_server_startup.ps1
 
