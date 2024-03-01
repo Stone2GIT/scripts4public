@@ -9,42 +9,67 @@
 # - script needs to be copied to rf2 root
 #
 
-# variable definitions
-if ( $args[0] ) {
-    $PROFILE=$args[0]
- }
- else {
-    $PROFILE="player"
- }
+# functions ...
+#
 
-$RF2USERDATA="userdata\$PROFILE"
-$RF2UIPORT=(((gc $RF2USERDATA\$PROFILE.JSON)| select-string -Pattern "WebUI port""") -split ":")
-$RF2UIPORT=($RF2UIPORT[1] -replace ",",'')
+function check4server {
+    do { 
+        Invoke-WebRequest -Uri http://127.0.0.1:$RF2UIPORT/rest/chat -Method Post
+        $RESULT = $?
+        } until ($RESULT)
+}
 
 function start_server {
 
-    write-host "starting server"
+    write-host "starting server with profile "$PROFILE
 
     # specifying rfm file ... modname + version ... 
     # $ARGUMENTS=" +profile=player +rfm=dummy_10.rfm +oneclick"
 
     # as it might have run before we could try oneclick option ...
     $ARGUMENTS=" +profile=$PROFILE +oneclick"
-
     start-process -FilePath "bin64\rFactor2 Dedicated.exe" -ArgumentList $ARGUMENTS -NoNewWindow
     
 }
 
+
+# main
+#
+
+# getting cmdline arguments
+if ( $args[0] ) {
+    $PROFILES=$args
+ }
+ else {
+    # if no argument is given determine all profiles
+    $PROFILES=(gci .\UserData multiplayer.json -recurse | select -Expand Directory| select -Expand Name)
+ }
+
+
+
 # check if we can find / read / modify multiplayer.json ...
-if (Test-Path $RF2USERDATA\multiplayer.json -PathType Leaf)
+#if (Test-Path $RF2USERDATA\multiplayer.json -PathType Leaf)
+if ($PROFILES)
 {
-    # if so ... run the script
-    write-host "multiplayer.json exists"
+    ForEach($PROFILE in $PROFILES)
+    {
+    $RF2USERDATA="userdata\$PROFILE"
+    $RF2UIPORT=(((gc $RF2USERDATA\$PROFILE.JSON)| select-string -Pattern "WebUI port""") -split ":")
+    $RF2UIPORT=($RF2UIPORT[1] -replace ",",'')
     
-    start_server
-    
+    if ( $(Invoke-WebRequest -Uri http://127.0.0.1:$RF2UIPORT/rest/chat -Method Post -Body "simracingjustfair.org - go fast, drive fair") ) {
+        write-host "Server with "$PROFILE" is already up" 
+        }
+    else {
+        start_server
+        check4server 
+        Invoke-WebRequest -Uri http://127.0.0.1:$RF2UIPORT/rest/chat -Method Post -Body "simracingjustfair.org - go fast, drive fair" 
+        }
+    }
 }
 else
 {
-    write-host "could not find multiplayer.json - please copy the script to rFactor 2 dedicated server root"
+    write-host "could not find any multiplayer.json - are we running from rf2 root folder?"
 }
+
+
