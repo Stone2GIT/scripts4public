@@ -14,7 +14,7 @@
 
 function check4server {
     do { 
-        Invoke-WebRequest -Uri http://127.0.0.1:$RF2UIPORT/rest/chat -Method Post
+        Invoke-WebRequest -Uri http://127.0.0.1:$RF2UIPORT/navigation/state -Method Get
         $RESULT = $?
         } until ($RESULT)
 }
@@ -57,7 +57,7 @@ if ($PROFILES)
     $RF2UIPORT=(((gc $RF2USERDATA\$PROFILE.JSON)| select-string -Pattern "WebUI port""") -split ":")
     $RF2UIPORT=($RF2UIPORT[1] -replace ",",'')
     
-    if ( $(Invoke-WebRequest -Uri http://127.0.0.1:$RF2UIPORT/rest/chat -Method Post -Body "simracingjustfair.org - go fast, drive fair") ) {
+    if ( $(Invoke-WebRequest -Uri http://127.0.0.1:$RF2UIPORT/navigation/state -Method Get) ) {
         write-host "Server with "$PROFILE" is already up" 
         }
     else {
