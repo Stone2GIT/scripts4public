@@ -42,6 +42,5 @@ Limitations:
 
 Usage:
 
-- .\rf2_server_startup.ps1 \<profile\> *profile defaults to player*
-x
+- .\rf2_server_startup.ps1 \[profile]> *starts ds for all profiles if not specified*
 
