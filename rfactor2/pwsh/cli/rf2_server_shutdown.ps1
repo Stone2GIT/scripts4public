@@ -29,8 +29,8 @@ function shutdown_server {
 # main
 #
 
-$RF2ROOT="."
-$RFUSERDATA="$RF2ROOT\userdata"
+$RF2ROOT="$HOME\rf2ds"
+$RF2USERDATA="$RF2ROOT\userdata"
 
 # getting cmdline arguments
 if ( $args[0] ) {
@@ -48,7 +48,7 @@ if ($PROFILES)
     ForEach($PROFILE in $PROFILES)
     {
     $RF2USERDIR="$RF2USERDATA\$PROFILE"
-    $RF2UIPORT=(((gc $RF2USER\$PROFILE.JSON)| select-string -Pattern "WebUI port""") -split ":")
+    $RF2UIPORT=(((gc $RF2USERDIR\$PROFILE.JSON)| select-string -Pattern "WebUI port""") -split ":")
     $RF2UIPORT=($RF2UIPORT[1] -replace ",",'')
     Invoke-WebRequest -Uri http://127.0.0.1:$RF2UIPORT/rest/chat -Method POST -Body "Server shutdown in 1 minute"
     }
@@ -58,7 +58,7 @@ if ($PROFILES)
     ForEach($PROFILE in $PROFILES)
     {
     $RF2USERDIR="$RF2USERDATA\$PROFILE"
-    $RF2UIPORT=(((gc $RF2USER\$PROFILE.JSON)| select-string -Pattern "WebUI port""") -split ":")
+    $RF2UIPORT=(((gc $RF2USERDIR\$PROFILE.JSON)| select-string -Pattern "WebUI port""") -split ":")
     $RF2UIPORT=($RF2UIPORT[1] -replace ",",'')
     
     shutdown_server
