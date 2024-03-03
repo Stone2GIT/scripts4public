@@ -1,0 +1,9 @@
+﻿$RF2ROOT="$HOME\rf2ds"
+$RF2WORKSHOPPKGS="$RF2ROOT\steamapps\workshop\content\365960"
+
+$STEAMINSTALLDIR="$RF2ROOT\steamcmd"
+$STEAMAPIKEY=""
+
+$CSVCARFILE="$RF2ROOT\dlccars.csv"
+$CSVTRACKFILE="$RF2ROOT\dlctracks.csv"
+$CSVCONTENTFILE="$RF2ROOT\dlccontent.csv"
