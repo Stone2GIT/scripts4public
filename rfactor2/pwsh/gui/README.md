@@ -12,7 +12,8 @@ In order to install DLC objects mark them and press *Install* button (multiple o
 
 Limitations:
 
-- needs to be copied and executed at *rfactor 2 root*
+- variables need to be set in *variables.ps1*
+- it is advised to copy and execute script at *rfactor 2 root*
 
 Usage:
 
