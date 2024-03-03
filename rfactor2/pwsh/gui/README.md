@@ -12,6 +12,7 @@ In order to install DLC objects mark them and press *Install* button (multiple o
 
 Limitations:
 
+- SteamCMD must be installed and accessible
 - variables need to be set in *variables.ps1*
 - it is advised to copy and execute script at *rfactor 2 root*
 
