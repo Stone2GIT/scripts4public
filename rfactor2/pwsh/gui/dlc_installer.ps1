@@ -9,6 +9,11 @@
 # - script needs to be copied to rf2 root
 #
 
+# Install .Net Assemblies
+Add-Type -AssemblyName System.Windows.Forms
+Add-Type -AssemblyName System.Drawing
+[Windows.Forms.Application]::EnableVisualStyles()
+
 # source variables
 . ./variables.ps1
 
