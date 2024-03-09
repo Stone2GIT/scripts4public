@@ -6,7 +6,7 @@
 
 # mandatory
 #
-# - script needs to be copied to rf2 root
+# - script needs to be copied to rf2 root if rf2root is kind of program files (xc86)
 #
 
 # functions ...
@@ -63,6 +63,13 @@ if ($PROFILES)
     
     shutdown_server
     }
+
+    # if we are using rfactor 2 log analyzer ...
+    #
+    $RF2LAPID=(gc "C:\Users\rfactor2\rf2la\web2py\httpserver.pid")
+    stop-process -id $RF2LAPID
+    stop-process -id (get-process web2py).id
+    
 }
 else
 {
