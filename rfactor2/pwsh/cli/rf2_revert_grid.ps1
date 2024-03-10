@@ -11,6 +11,7 @@
 . ./variables.ps1
 
 $RF2CLTIP="127.0.0.1"
+$RF2WEBPORT="5397"
 $RF2SRVIP="domainname.in.the.world.or.ip"
 $RF2ADMINPW="adminpw"
 
