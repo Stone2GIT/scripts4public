@@ -46,7 +46,7 @@ Usage:
 
 ## rf2_revert_grid.ps1
 
-This is a Windows Powershell script which can be used with rFactor 2 Client. It needs tp be copied to *rfactor 2 root*.
+This is a Windows Powershell script which can be used with rFactor 2 Client. It needs to be copied to *rfactor 2 root*.
 
 Once executed the scripts waits until race has been finsihed and then restarts the race weekend in order to proceed
 to warmup, reverting the grid and switch to second race afterwards.
@@ -56,4 +56,14 @@ Grid reversion is based on race results of first session.
 Usage:
 
 - .\rf2_revert_grid.ps1
+
+## rf2_ws_item_installer.ps1
+
+This is a Windows Powershell script which can be used with rFactor 2 Dedicated Server and Client. It needs to be copied to *rfactor 2 root*.
+
+Given workshop item IDs will be installed.
+
+Usage:
+
+- .\rf2_ws_item_installer.ps1 <steamid> <steamid> ...
 
