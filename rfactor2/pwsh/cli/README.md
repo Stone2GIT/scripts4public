@@ -44,3 +44,16 @@ Usage:
 
 - .\rf2_server_startup.ps1 \[profile]> *starts ds for all profiles if not specified*
 
+## rf2_revert_grid.ps1
+
+This is a Windows Powershell script which can be used with rFactor 2 Client. It needs tp be copied to *rfactor 2 root*.
+
+Once executed the scripts waits until race has been finsihed and then restarts the race weekend in order to proceed
+to warmup, reverting the grid and switch to second race afterwards.
+
+Grid reversion is based on race results of first session.
+
+Usage:
+
+- .\rf2_revert_grid.ps1
+
