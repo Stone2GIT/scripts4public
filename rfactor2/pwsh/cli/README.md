@@ -65,5 +65,5 @@ Given workshop item IDs will be installed.
 
 Usage:
 
-- .\rf2_ws_item_installer.ps1 <steamid> <steamid> ...
+- .\rf2_ws_item_installer.ps1 \<steamid\> \<steamid\> ...
 
