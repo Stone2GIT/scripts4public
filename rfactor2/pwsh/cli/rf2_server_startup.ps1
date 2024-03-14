@@ -14,6 +14,7 @@
 
 function check4server {
     do { 
+        start-sleep -seconds 5
         Invoke-WebRequest -Uri http://127.0.0.1:$RF2UIPORT/navigation/state -Method Get
         $RESULT = $?
         } until ($RESULT)
