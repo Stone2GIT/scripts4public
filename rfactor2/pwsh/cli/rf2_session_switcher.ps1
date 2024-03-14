@@ -26,7 +26,7 @@ $RF2UIPORT=($RF2UIPORT[1] -replace ",",'')
 
 function check4server {
 
-    while (Invoke-WebRequest -Uri http://127.0.0.1:$RF2UIPORT/rest/chat -Method Post) { write-host "Server seems to be still up"; start-sleep -seconds 3 }
+    while (Invoke-WebRequest -Uri http://127.0.0.1:$RF2UIPORT/rest/chat -Method Post) { write-host "Server seems to be still up"; start-sleep -seconds 10 }
 
 }
 
