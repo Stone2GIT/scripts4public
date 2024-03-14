@@ -29,7 +29,7 @@ foreach ($STEAMID in $STEAMIDS)
     foreach ($RFCMP in $RFCMPS)
     {
         #& "$RF2ROOT\bin64\ModMgr.exe" -i"$RFCMP" -p"$RF2WORKSHOPPKGS\$STEAMID" -d"$RF2ROOT"
-        $ARGUMENTS=" -i""$RFCMP"" -p""$RF2WORKSHOPPKGS\$STEAMID"" -d""$RF2ROOT"" "
+        $ARGUMENTS=" -i""$RFCMP"" -p""$RF2WORKSHOPPKGS\$STEAMID"" -d""$RF2ROOT"" -c""$RF2ROOT"" -o""$RF2ROOT"" "
         start-process -FilePath "$RF2ROOT\bin64\ModMgr.exe" -ArgumentList $ARGUMENTS -nonewwindow -wait
 
         # start-process does not really wait for modmgr having finished so we need some xtra wait
