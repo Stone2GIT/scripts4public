@@ -9,6 +9,8 @@
 # - script needs to be copied to rf2 root
 #
 
+. .\variables.ps1
+
 # variable definitions
 if ( $args[0] ) {
     $PROFILE=$args[0]
@@ -17,12 +19,17 @@ if ( $args[0] ) {
     $PROFILE="player"
  }
 
+
+    $RF2USERDATA="$RF2ROOT\USERDATA\$PROFILE"
+    $RF2UIPORT=(((gc $RF2USERDATA\$PROFILE.JSON)| select-string -Pattern "WebUI port""") -split ":")
+    $RF2UIPORT=($RF2UIPORT[1] -replace ",",'')
+
 function check4server {
     do { 
         start-sleep -seconds 5
         Invoke-WebRequest -Uri http://127.0.0.1:$RF2UIPORT/navigation/state -Method Get
         $RESULT = $?
-        } until ($RESULT)
+        } until (!$RESULT)
 }
 
 function change_configuration {
@@ -71,15 +78,10 @@ function start_server {
     $ARGUMENTS=" +profile=player +oneclick"
 
     start-process -FilePath "bin64\rFactor2 Dedicated.exe" -ArgumentList $ARGUMENTS -NoNewWindow
-
+    
     check4server
 
-    $RF2USERDIR="$RF2USERDATA\$PROFILE"
-    $RF2UIPORT=(((gc $RF2USERDIR\$PROFILE.JSON)| select-string -Pattern "WebUI port""") -split ":")
-    $RF2UIPORT=($RF2UIPORT[1] -replace ",",'')
-
     Invoke-WebRequest -Uri http://127.0.0.1:$RF2UIPORT/rest/chat -Method Post -Body "simracingjustfair.org - go fast, drive fair"
-    
 }
 
 function shutdown_server {
