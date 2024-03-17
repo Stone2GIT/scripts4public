@@ -10,9 +10,6 @@
 
 . ./variables.ps1
 
-$RF2ROOT="$HOME\rf2ds"
-$RF2USERDATA="$RF2ROOT\userdata"
-
 # getting cmdline arguments
 if ( $args[0] ) {
     $PROFILE=$args[0]
@@ -21,17 +18,11 @@ if ( $args[0] ) {
     $PROFILE="player"
  }
 
-$RF2USERDIR="$RF2USERDATA\$PROFILE"
 $RF2UIPORT=(((gc $RF2USERDIR\$PROFILE.JSON)| select-string -Pattern "WebUI port""") -split ":")
 $RF2UIPORT=($RF2UIPORT[1] -replace ",",'')
 
-$RF2CLTIP="127.0.0.1"
-$RF2SRVIP="domainname.in.the.world.or.ip"
-$RF2ADMINPW="adminpw"
-
 # we need to become administrator
 Invoke-WebRequest -Uri http://$RF2CLTIP:$RF2UIPORT/rest/chat -Method POST -Body "/admin $RF2ADMINPW"
-
 
 # looping until session is RACE1
 $SESSIONSTATE = (Invoke-WebRequest "http://$RF2CLTIP:$RF2UIPORT/rest/watch/sessionInfo"| ConvertFrom-Json).session
