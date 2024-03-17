@@ -10,24 +10,38 @@
 
 . ./variables.ps1
 
+$RF2ROOT="$HOME\rf2ds"
+$RF2USERDATA="$RF2ROOT\userdata"
+
+# getting cmdline arguments
+if ( $args[0] ) {
+    $PROFILE=$args[0]
+ }
+ else {
+    $PROFILE="player"
+ }
+
+$RF2USERDIR="$RF2USERDATA\$PROFILE"
+$RF2UIPORT=(((gc $RF2USERDIR\$PROFILE.JSON)| select-string -Pattern "WebUI port""") -split ":")
+$RF2UIPORT=($RF2UIPORT[1] -replace ",",'')
+
 $RF2CLTIP="127.0.0.1"
-$RF2WEBPORT="5397"
 $RF2SRVIP="domainname.in.the.world.or.ip"
 $RF2ADMINPW="adminpw"
 
 # we need to become administrator
-Invoke-WebRequest -Uri http://$RF2CLTIP:$RF2WEBPORT/rest/chat -Method POST -Body "/admin $RF2ADMINPW"
+Invoke-WebRequest -Uri http://$RF2CLTIP:$RF2UIPORT/rest/chat -Method POST -Body "/admin $RF2ADMINPW"
 
 
 # looping until session is RACE1
-$SESSIONSTATE = (Invoke-WebRequest "http://$RF2CLTIP:$RF2WEBPORT/rest/watch/sessionInfo"| ConvertFrom-Json).session
+$SESSIONSTATE = (Invoke-WebRequest "http://$RF2CLTIP:$RF2UIPORT/rest/watch/sessionInfo"| ConvertFrom-Json).session
 echo "session state"
 $SESSIONSTATE
 
 while( $SESSIONSTATE -ne "RACE1" )
  {
   sleep 30
-  $SESSIONSTATE = (Invoke-WebRequest "http://$RF2CLTIP:$RF2WEBPORT/rest/watch/sessionInfo"| ConvertFrom-Json).session
+  $SESSIONSTATE = (Invoke-WebRequest "http://$RF2CLTIP:$RF2UIPORT/rest/watch/sessionInfo"| ConvertFrom-Json).session
  }
 
 # RACE1 has been reached and we are now wating for PRACTICE1 (automatic restart weekend)
@@ -37,7 +51,7 @@ $SESSIONSTATE
 while( $SESSIONSTATE -ne "PRACTICE1" )
  {
   sleep 30
-  $SESSIONSTATE = (Invoke-WebRequest "http://$RF2CLTIP:$RF2WEBPORT/rest/watch/sessionInfo"| ConvertFrom-Json).session
+  $SESSIONSTATE = (Invoke-WebRequest "http://$RF2CLTIP:$RF2UIPORT/rest/watch/sessionInfo"| ConvertFrom-Json).session
  }
 
 echo "session state"
@@ -48,7 +62,7 @@ start-sleep -seconds 180
 
 # if we have reached PRACTICE1 after RACE1 ...
 # message
-Invoke-WebRequest -Uri http://$RF2CLTIP:$RF2WEBPORT/rest/chat -Method POST -Body "DOING REVERSE GRID - DO NOT PRESS DRIVE"
+Invoke-WebRequest -Uri http://$RF2CLTIP:$RF2UIPORT/rest/chat -Method POST -Body "DOING REVERSE GRID - DO NOT PRESS DRIVE"
 
 # change dir ... maybe necessary
 cd "$RF2ROOT"
@@ -86,32 +100,32 @@ $string | ForEach{
 }
 $myobjecttosort | Sort-Object Numeric | select -Expand string | out-file -Append "$RF2ROOT\UserData\Log\Results\reversegrid.ini"
 
-$SESSIONSTATE = (Invoke-WebRequest "http://$RF2CLTIP:$RF2WEBPORT/rest/watch/sessionInfo"| ConvertFrom-Json).session
+$SESSIONSTATE = (Invoke-WebRequest "http://$RF2CLTIP:$RF2UIPORT/rest/watch/sessionInfo"| ConvertFrom-Json).session
 
 while( $SESSIONSTATE -ne "PRACTICE1" )
  {
   write-host "Waiting for PRACTICE1"
   write-host "Session state "$SESSIONSTATE
   sleep 10
-  $SESSIONSTATE = (Invoke-WebRequest "http://$RF2CLTIP:$RF2WEBPORT/rest/watch/sessionInfo"| ConvertFrom-Json).session
+  $SESSIONSTATE = (Invoke-WebRequest "http://$RF2CLTIP:$RF2UIPORT/rest/watch/sessionInfo"| ConvertFrom-Json).session
  }
 
-Invoke-WebRequest -Uri http://$RF2CLTIP:$RF2WEBPORT/rest/chat -Method POST -Body "Skipping to warmup ..."
+Invoke-WebRequest -Uri http://$RF2CLTIP:$RF2UIPORT/rest/chat -Method POST -Body "Skipping to warmup ..."
 
 while( $SESSIONSTATE -ne "WARMUP" )
  {
   write-host "Waiting for warmup ..."
   write-host "Session state "$SESSIONSTATE
-  Invoke-WebRequest -Uri http://$RF2CLTIP:$RF2WEBPORT/rest/chat -Method POST -Body "/callvote nextsession"
+  Invoke-WebRequest -Uri http://$RF2CLTIP:$RF2UIPORT/rest/chat -Method POST -Body "/callvote nextsession"
   sleep 10
-  $SESSIONSTATE = (Invoke-WebRequest "http://$RF2CLTIP:$RF2WEBPORT/rest/watch/sessionInfo"| ConvertFrom-Json).session
+  $SESSIONSTATE = (Invoke-WebRequest "http://$RF2CLTIP:$RF2UIPORT/rest/watch/sessionInfo"| ConvertFrom-Json).session
  }
 
 # working ...
 ForEach ($APICOMMAND in "Reverting the grid ...","/batch reversegrid.ini","Reverting for safety reasons again ...","/batch $RF2ROOT\reversegrid.ini")
  {
     $APICOMMAND
-    Invoke-WebRequest -Uri http://$RF2CLTIP:$RF2WEBPORT/rest/chat -Method POST -Body "$APICOMMAND"
+    Invoke-WebRequest -Uri http://$RF2CLTIP:$RF2UIPORT/rest/chat -Method POST -Body "$APICOMMAND"
     #
     # TODO: we need to make sure we are IN next session ...
     #       sleep is not reliable :-(
@@ -119,8 +133,8 @@ ForEach ($APICOMMAND in "Reverting the grid ...","/batch reversegrid.ini","Rever
     sleep 10
   }
 
-Invoke-WebRequest -Uri http://$RF2CLTIP:$RF2WEBPORT/rest/chat -Method POST -Body "Going straight to race ..."
-Invoke-WebRequest -Uri http://$RF2CLTIP:$RF2WEBPORT/rest/chat -Method POST -Body "/callvote nextsession"
+Invoke-WebRequest -Uri http://$RF2CLTIP:$RF2UIPORT/rest/chat -Method POST -Body "Going straight to race ..."
+Invoke-WebRequest -Uri http://$RF2CLTIP:$RF2UIPORT/rest/chat -Method POST -Body "/callvote nextsession"
 
 # TODO: ggf. den DS nach dem zweiten Rennen loeschen (mit den Schleifen, wie oben ...)
 
@@ -131,9 +145,9 @@ $SESSIONSTATE
 while( $SESSIONSTATE -ne "PRACTICE1" )
  {
   sleep 30
-  $SESSIONSTATE = (Invoke-WebRequest "http://$RF2CLTIP:$RF2WEBPORT/rest/watch/sessionInfo"| ConvertFrom-Json).session
+  $SESSIONSTATE = (Invoke-WebRequest "http://$RF2CLTIP:$RF2UIPORT/rest/watch/sessionInfo"| ConvertFrom-Json).session
  }
 
 # Dedicated Server shutdown ... that does work if the webui port of the dedicated server is reachable
-Invoke-WebRequest -Uri http://$RF2SRVIP:$RF2WEBPORT/rest/chat -Method POST -Body "Thanks for racing."
-Invoke-WebRequest -Uri http://$RF2SRVIP:$RF2WEBPORT/navigation/action/NAV_EXIT -Method POST
+Invoke-WebRequest -Uri http://$RF2SRVIP:$RF2UIPORT/rest/chat -Method POST -Body "Thanks for racing."
+Invoke-WebRequest -Uri http://$RF2SRVIP:$RF2UIPORT/navigation/action/NAV_EXIT -Method POST
