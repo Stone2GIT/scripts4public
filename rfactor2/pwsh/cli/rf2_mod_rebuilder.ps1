@@ -11,9 +11,10 @@ $PREFIX="srjf-"
 $DATFILE="$PREFIX"+"$PROFILE.dat"
 $RFMODFILENAME="$PREFIX"+"$PROFILE.rfmod"
 
+# change folder
 cd $RF2ROOT\bmp
 
-cp dummy.mas $PREFIX$PROFILE.mas
+copy dummy.mas $PREFIX$PROFILE.mas
 
 $ARGUMENTS=" -c""$RF2ROOT"" -o""$HOME\AppData\Roaming\~MASTEMP\"" -m""$PREFIX$PROFILE.mas"" ""$RF2ROOT\bmp\default.rfm"" ""$RF2ROOT\bmp\icon.dds"" ""$RF2ROOT\bmp\smicon.dds"""
 #& "RF2ROOT\bin64\modmgr.exe" -c""$RF2ROOT"" -o""$HOME\AppData\Roaming\~MASTEMP\"" -m""SRJF-$PROFILE.mas"" ""$RF2ROOT\bmp\default.rfm"" ""$RF2ROOT\bmp\icon.dds"" ""$RF2ROOT\bmp\smicon.dds""
