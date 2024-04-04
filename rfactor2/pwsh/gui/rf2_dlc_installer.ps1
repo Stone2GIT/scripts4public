@@ -136,8 +136,11 @@ ForEach($CSVCARENTRY in Import-CSV $CSVCARFILE)
  $RFCMPS=(gci $RF2WORKSHOPPKGS\$STEAMID *.rfcmp -recurse| select -Expand Name|sort)
  foreach ($RFCMP in $RFCMPS)
 {
- & "$RF2ROOT\bin64\ModMgr.exe" -i"$RFCMP" -p"$RF2WORKSHOPPKGS\$STEAMID" -d"$RF2ROOT"
- start-sleep -seconds 5
+ $ARGUMENTS=" -i""$RFCMP"" -p""$RF2WORKSHOPPKGS\$STEAMID"" -d""$RF2ROOT"" "
+start-process "$RF2ROOT\bin64\ModMgr.exe" -ArgumentList $ARGUMENTS -NoNewWindow -wait 
+
+# & "$RF2ROOT\bin64\ModMgr.exe" -i"$RFCMP" -p"$RF2WORKSHOPPKGS\$STEAMID" -d"$RF2ROOT"
+ start-sleep -seconds 3
  }
       # extract and install ...
       #& $RF2SRVMGRDIR\helper\rfcmp_extractor.ps1 $STEAMID
@@ -173,7 +176,16 @@ ForEach($CSVTRACKENTRY in Import-CSV $CSVTRACKFILE)
 # ModMgr.exe -i"AstonMartin_Vantage_GT3_2019_v3.60.rfcmp" -p"[packages folder]" -d"$RF2ROOT"
 # gci .\2103827617\ *.rfcmp -recurse| select -Expand Name|sort
       # extract and install ...
-      & $RF2SRVMGRDIR\helper\rfcmp_extractor.ps1 $STEAMID
+  #    & $RF2SRVMGRDIR\helper\rfcmp_extractor.ps1 $STEAMID
+
+ foreach ($RFCMP in $RFCMPS)
+{
+ $ARGUMENTS=" -i""$RFCMP"" -p""$RF2WORKSHOPPKGS\$STEAMID"" -d""$RF2ROOT"" "
+start-process "$RF2ROOT\bin64\ModMgr.exe" -ArgumentList $ARGUMENTS -NoNewWindow -wait 
+
+# & "$RF2ROOT\bin64\ModMgr.exe" -i"$RFCMP" -p"$RF2WORKSHOPPKGS\$STEAMID" -d"$RF2ROOT"
+ start-sleep -seconds 3
+ }
      }
    }
   }
