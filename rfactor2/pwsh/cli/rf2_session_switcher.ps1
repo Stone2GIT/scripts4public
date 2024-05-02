@@ -26,7 +26,7 @@ if ( $args[0] ) {
 
 function check4server {
     do { 
-        start-sleep -seconds 5
+        start-sleep -seconds 15
         Invoke-WebRequest -Uri http://127.0.0.1:$RF2UIPORT/navigation/state -Method Get
         $RESULT = $?
         } until (!$RESULT)
@@ -79,7 +79,11 @@ function start_server {
 
     start-process -FilePath "bin64\rFactor2 Dedicated.exe" -ArgumentList $ARGUMENTS -NoNewWindow
     
-    check4server
+    do { 
+        start-sleep -seconds 5
+        Invoke-WebRequest -Uri http://127.0.0.1:$RF2UIPORT/navigation/state -Method Get
+        $RESULT = $?
+        } until ($RESULT)
 
     Invoke-WebRequest -Uri http://127.0.0.1:$RF2UIPORT/rest/chat -Method Post -Body "simracingjustfair.org - go fast, drive fair"
 }
@@ -108,6 +112,8 @@ if (Test-Path $RF2USERDATA\multiplayer.json -PathType Leaf)
     write-host "multiplayer.json exists"
     
     shutdown_server
+
+    start-sleep -seconds 30
     
     start_server
 }
