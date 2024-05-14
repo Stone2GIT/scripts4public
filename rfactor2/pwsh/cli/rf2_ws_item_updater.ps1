@@ -7,8 +7,15 @@
 # source variables
 . ./variables.ps1
 
+# getting SteamIDs by simply using $args
+$STEAMIDS=$args
+
+if (!$STEAMIDS) {
+
 # getting SteamIDs by simply using gci
-$STEAMIDS=(gci -Path $RF2WORKSHOPPKGS|select -Expand Name)
+$STEAMIDS=(gci -Path $RF2WORKSHOPPKGS|select -Expand Name) 
+
+}
 
 # what to do with the given IDs
 foreach ($STEAMID in $STEAMIDS)
