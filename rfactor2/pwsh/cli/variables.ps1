@@ -1,11 +1,5 @@
 ﻿$RF2ROOT="$HOME\rf2ds"
 $RF2WORKSHOPPKGS="$RF2ROOT\steamapps\workshop\content\365960"
-$RF2USERDATA="$RF2ROOT\userdata"
-$RF2USERDIR="$RF2USERDATA\$PROFILE"
-
-$RF2CLTIP="127.0.0.1"
-$RF2SRVIP="domainname.in.the.world.or.ip"
-$RF2ADMINPW="adminpw"
 
 $STEAMINSTALLDIR="$RF2ROOT\steamcmd"
 $STEAMAPIKEY=""
