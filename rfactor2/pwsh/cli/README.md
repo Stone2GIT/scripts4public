@@ -1,69 +1,57 @@
 # Command Line Interface scripts for rFactor 2
 
-## rf2_session_switcher.ps1
+## General
 
-This is a Windows Powershell script which can be used with rFactor 2 Dedicated Server. It needs to be copied to *rfactor 2 root*.
+All scripts assume that variables in _variables.ps1_ are defined - refer to comments in scripts for examples and syntax.
 
-If the server is running in *test day mode* it will change to normal *race weekend* and set *no pause* option; if the server is
-running in *race weekend* the script will change to *test day mode* with *zero players* option enabled, which causes the DS to
-write back all logfiles when the last driver leaves the server / session.
+## Scripts
 
-Limitations:
+### rf2_mod_rebuilder.ps1
 
-- needs to be copied and executed at *rfactor 2 root*
+Script for rebuilding a mod. 
 
-Usage:
+Note: needs _.dat_ file with _mod_ details named _<prefix>-<profile name>.dat_ - assumes directory _$RF2ROOT\bmp_ exists and files are located there.
 
-- .\rf2_session_switcher.ps1 \<profile\> *profile defaults to player*
+ToDo: making it more dynamic.
 
-## rf2_server_shutdown.ps1
+### rf2_revert_grid.ps1
 
-This is a Windows Powershell script which can be used with rFactor 2 Dedicated Server. It needs to be copied to *rfactor 2 root*.
+Script for grid reverting after first race session.
 
-It shuts down rFactor 2 Dedicated Server after sending a chat message to connected players and by waiting about a minute.
+Note: needs to be started at client!
 
-Limitations:
+### rf2_server_shutdown.ps1
 
-- needs to be copied and executed at *rfactor 2 root*
+Script for shutting down every server with profile found in _$RF2ROOT\Userdata_ (profiles are identified by _multiplayer.json_).
 
-Usage:
+Note: sends message before shutting down server (1 minute) and sends _NAV_EXIT_ in order to have logs and results written properly.
 
-- .\rf2_server_shutdown.ps1 \[profile]> *shutdown ds for all profiles if not specified*
+### rf2_server_startup.ps1
 
-## rf2_server_startup.ps1
+Script for starting up every server found by _multiplayer.json_ in _$RF2ROOT\Userdata_.
 
-This is a Windows Powershell script which can be used with rFactor 2 Dedicated Server. It needs to be copied to *rfactor 2 root*.
+### rf2_session_switcher.ps1
 
-It starts rFactor 2 Dedicated Server.
+Script for switching session from _testday_ to _race_ and vice versa (_td_ will be switched to _race_ and _race_ will be switched to _td_).
 
-Limitations:
+Note: profile / server name can be specified as _$1_ argument on command line.
 
-- needs to be copied and executed at *rfactor 2 root*
+### rf2_start_next_event.ps1
 
-Usage:
+Script for starting next event defined by mod file. 
 
-- .\rf2_server_startup.ps1 \[profile]> *starts ds for all profiles if not specified*
+Note: pretty static at the moment.
 
-## rf2_revert_grid.ps1
+ToDo: making it more dynamic.
 
-This is a Windows Powershell script which can be used with rFactor 2 Client. It needs to be copied to *rfactor 2 root*.
+### rf2_ws_item_installer.ps1
 
-Once executed the scripts waits until race has been finsihed and then restarts the race weekend in order to proceed
-to warmup, reverting the grid and switch to second race afterwards.
+Script for installing items from Steam RF2 workshop by specifying SteamID.
 
-Grid reversion is based on race results of first session.
+Note: SteamIDs can be specified as a space separated list (e.g. 2547781 2887609 36587619).
 
-Usage:
+### rf2_ws_item_updater.ps1
 
-- .\rf2_revert_grid.ps1
+Script for updating content already being downloaded and installed.
 
-## rf2_ws_item_installer.ps1
-
-This is a Windows Powershell script which can be used with rFactor 2 Dedicated Server and Client. It needs to be copied to *rfactor 2 root*.
-
-Given workshop item IDs will be installed.
-
-Usage:
-
-- .\rf2_ws_item_installer.ps1 \<steamid\> \<steamid\> ...
-
+Note: will check for SteamIDs in _$RF2ROOT\steamapps\workshop\content\365960_ and check for updates - will be installed automatically to _$RF2ROOT\Installed_.
